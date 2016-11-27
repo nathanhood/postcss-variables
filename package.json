@@ -1,0 +1,14 @@
+{
+  "name": "postcss-variables",
+  "version": "1.0.0",
+  "description": "Variable declarations for CSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Hood",
+  "license": "ISC",
+  "dependencies": {
+    "postcss": "^5.2.6"
+  }
+}
