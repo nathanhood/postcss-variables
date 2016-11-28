@@ -4,11 +4,15 @@
   "description": "Variable declarations for CSS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./tests.js"
   },
   "author": "Nathan Hood",
   "license": "ISC",
   "dependencies": {
     "postcss": "^5.2.6"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }
