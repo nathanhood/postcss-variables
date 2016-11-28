@@ -1,8 +1,11 @@
+const postcss = require('postcss');
+
 module.exports = postcss.plugin('postcss-variables', opts => {
 	opts = opts || {};
+	var result;
 
 	const isVariableDeclaration = /^\$[\w-]+$/;
-	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-]*)\)|([A-z][\w-]*))/g; // TODO: Use {} instead of ()
+	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-]*)\)|([A-z][\w-]*))/g;
 	const wrappingParen = /^\((.*)\)$/g;
 
 	/**
@@ -128,8 +131,6 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 		return nodeCount;
 	}
 
-	// TODO: Inspect quotes are stipped from @import url('/$path/screen.css')
-	// TODO: It does not appear to be this plugin
 	/**
 	 * Action to be taken on each atRule (ie - @name PARAMS)
 	 *
@@ -168,9 +169,11 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 		}
 	}
 
-	return root => {
+	return (root, res) => {
+		result = res;
+
 		// Initialize each global variable
-		for (var name in opts.variables || {}) {
+		for (var name in opts.globals || {}) {
 			setVariable(root, name, opts.globals[name]);
 		}
 
