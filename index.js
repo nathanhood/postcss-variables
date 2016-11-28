@@ -50,11 +50,28 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 	 * @returns {*}
 	 */
 	function getVariableTransformedString(node, string) {
-		return string.replace(variablesInString, function (match, before, name1, name2) {
-			var value = getVariable(node, name1 || name2);
+		return string.replace(variablesInString, (match, before, name1, name2) => {
+			let prop = name1 || name2,
+				value = getVariable(node, prop);
 
-			return value === undefined ? match : before + value;
+			if (value === undefined) {
+				node.warn(result, 'Undefined variable $' + prop);
+
+				return match;
+			}
+
+			return before + formatValue(value);
 		});
+	}
+
+	/**
+	 * Format array of values with comma and space between
+	 *
+	 * @param {array|string|number} value
+	 * @returns {string|*}
+	 */
+	function formatValue(value) {
+		return Array.isArray(value) ? value.join(', ') : value;
 	}
 
 	/**
