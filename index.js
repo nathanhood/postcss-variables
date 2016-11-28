@@ -2,7 +2,7 @@ const postcss = require('postcss');
 
 module.exports = postcss.plugin('postcss-variables', opts => {
 	opts = opts || {};
-	var result;
+	let result;
 
 	const isVariableDeclaration = /^\$[\w-]+$/;
 	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-]*)\)|([A-z][\w-]*))/g;
@@ -17,7 +17,7 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 	 * @returns {*}
 	 */
 	function getArrayedString(string, first) {
-		var array = postcss.list
+		let array = postcss.list
 			.comma(String(string))
 			.map(substring => {
 				return wrappingParen.test(substring) ?
@@ -151,8 +151,8 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 	 * @param {postcss.Container} parent
 	 */
 	function each(parent) {
-		var index = -1;
-		var node;
+		let index = -1;
+		let node;
 
 		while (node = parent.nodes[++index]) {
 			if (node.type === 'decl') {
@@ -173,7 +173,7 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 		result = res;
 
 		// Initialize each global variable
-		for (var name in opts.globals || {}) {
+		for (let name in opts.globals || {}) {
 			setVariable(root, name, opts.globals[name]);
 		}
 
