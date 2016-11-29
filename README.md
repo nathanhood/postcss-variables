@@ -4,6 +4,37 @@
 
 Converts variables into CSS.
 
+```scss
+/* before (nesting requires postcss-nested) */
+
+$dir: assets/icons;
+$color: blue;
+
+.block {
+	background: url('$(dir)/foo.png');
+	&__elem {
+		$color: green;
+		color: $color;
+	}
+	&__elem2 {
+		color: $color;
+	}
+}
+
+/* after */
+
+.block {
+	background: url('assets/icons/foo.png');
+	&__elem {
+		color: green;
+	}
+	&__elem2 {
+		color: blue;
+	}
+}
+```
+
+
 ## Usage
 
 Add PostCSS Variables to your build tool:
