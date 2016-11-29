@@ -1,11 +1,11 @@
 const postcss = require('postcss');
 
 module.exports = postcss.plugin('postcss-variables', opts => {
-	opts = opts || {};
-	let result;
+	let globals = opts.globals,
+		result;
 
 	const isVariableDeclaration = /^\$[\w-]+$/;
-	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-]*)\)|([A-z][\w-]*))/g;
+	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-.]*)\)|([A-z][\w-.]*))/g;
 	const wrappingParen = /^\((.*)\)$/g;
 
 	/**
@@ -32,13 +32,26 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 	 * Retrieve variable, traversing up parent containers as necessary
 	 *
 	 * @param {postcss.Container} node
-	 * @param {string } name
+	 * @param {string} name
 	 * @returns {*}
 	 */
 	function getVariable(node, name) {
-		let value = node.variables && node.variables[name] ?
-			node.variables[name] :
-		node.parent && getVariable(node.parent, name);
+		let segs = name.toString().split('.'),
+			key = segs.shift(),
+			value = null;
+
+		if (node.variables && node.variables[key]) {
+			value = node.variables[key];
+
+			while (segs.length && value.hasOwnProperty(segs[0])) {
+				value = value[segs[0]];
+				segs.shift();
+			}
+		}
+
+		if (value === null || segs.length) {
+			value = node.parent && getVariable(node.parent, name);
+		}
 
 		return value;
 	}
@@ -173,8 +186,8 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 		result = res;
 
 		// Initialize each global variable
-		for (let name in opts.globals || {}) {
-			setVariable(root, name, opts.globals[name]);
+		if (globals) {
+			root.variables = Object.assign({}, globals);
 		}
 
 		// Begin processing each css node

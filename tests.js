@@ -18,7 +18,7 @@ function processFail(input, expected, opts = {}) {
 		});
 }
 
-describe('CSS declarations', () => {
+describe('Declarations', () => {
 	it('should resolve values', () => {
 		return process(
 			`$size: 10px;
@@ -142,6 +142,55 @@ describe('Variable scope', () => {
 				globals: {
 					color: 'blue',
 					fontSize: '20px'
+				}
+			}
+		);
+	});
+
+	it('should resolve nested global properties with dot notation', () => {
+		return process(
+			`.block {
+				color: $colors.primary;
+				&__elem {
+					$colors: blue;
+					width: $components.elem.width;
+					&.-modifier {
+						background-image: url('/img/icon.png');
+						color: $colors;
+						width: $components.elem.modified.width;
+					}
+				}
+			}
+			.block2 {
+				color: $colors.primary;
+			}`,
+			`.block {
+				color: #ffffff;
+				&__elem {
+					width: 10px;
+					&.-modifier {
+						background-image: url('/img/icon.png');
+						color: blue;
+						width: 20px;
+					}
+				}
+			}
+			.block2 {
+				color: #ffffff;
+			}`,
+			{
+				globals: {
+					colors: {
+						primary: '#ffffff'
+					},
+					components: {
+						elem: {
+							width: '10px',
+							modified: {
+								width: '20px'
+							}
+						}
+					}
 				}
 			}
 		);
