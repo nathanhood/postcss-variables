@@ -165,7 +165,7 @@ describe('Variable scope', () => {
 				color: $colors.primary;
 			}`,
 			`.block {
-				color: #ffffff;
+				color: #fff;
 				&__elem {
 					width: 10px;
 					&.-modifier {
@@ -176,12 +176,12 @@ describe('Variable scope', () => {
 				}
 			}
 			.block2 {
-				color: #ffffff;
+				color: #fff;
 			}`,
 			{
 				globals: {
 					colors: {
-						primary: '#ffffff'
+						primary: '#fff'
 					},
 					components: {
 						elem: {
