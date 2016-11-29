@@ -71,4 +71,4 @@ require('postcss-variables')({
 }
 ```
 
-**Note:** Please refer to [Advanced Variables](https://github.com/jonathantneal/postcss-advanced-variables) for more advanced features. This is essentially a simplification and alteration of that plugin. Thank you to the author for making it available.
+**Note:** Please refer to [Advanced Variables](https://github.com/jonathantneal/postcss-advanced-variables) for more advanced features. This library is essentially a simplification and alteration of that plugin. Thank you to the author for making it available.
