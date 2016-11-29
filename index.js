@@ -1,7 +1,7 @@
 const postcss = require('postcss');
 
-module.exports = postcss.plugin('postcss-variables', opts => {
-	let globals = opts.globals,
+module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
+	let globals = opts.globals || {},
 		result;
 
 	const isVariableDeclaration = /^\$[\w-]+$/;
@@ -186,9 +186,7 @@ module.exports = postcss.plugin('postcss-variables', opts => {
 		result = res;
 
 		// Initialize each global variable
-		if (globals) {
-			root.variables = Object.assign({}, globals);
-		}
+		root.variables = Object.assign({}, globals);
 
 		// Begin processing each css node
 		each(root);
