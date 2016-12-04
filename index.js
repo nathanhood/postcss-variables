@@ -6,7 +6,6 @@ module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
 
 	const isVariableDeclaration = /^\$[\w-]+$/;
 	const variablesInString = /(^|[^\\])\$(?:\(([A-z][\w-.]*)\)|([A-z][\w-.]*))/g;
-	const wrappingParen = /^\((.*)\)$/g;
 
 	/**
 	 * Split comma separated arguments
@@ -18,12 +17,7 @@ module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
 	 */
 	function getArrayedString(string, first) {
 		let array = postcss.list
-			.comma(String(string))
-			.map(substring => {
-				return wrappingParen.test(substring) ?
-					getArrayedString(substring.replace(wrappingParen, '$1')) :
-					substring;
-			});
+			.comma(String(string));
 
 		return first && array.length === 1 ? array[0] : array;
 	}

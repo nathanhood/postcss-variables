@@ -88,6 +88,19 @@ describe('Declarations', () => {
 			}`
 		);
 	});
+
+	it('should resolve variables with variables as values', () => {
+		return process(
+			`$baseDir: /img;
+			$path: $(baseDir)/share.png;
+			body {
+				background-image: url('$(path)');
+			}`,
+			`body {
+				background-image: url('/img/share.png');
+			}`
+		);
+	});
 });
 
 describe('Variable scope', () => {
