@@ -1,6 +1,8 @@
 # PostCSS Variables
 
 [![Build Status](https://travis-ci.org/nathanhood/postcss-variables.svg?branch=master)](https://travis-ci.org/nathanhood/postcss-variables)
+[![codecov](https://codecov.io/gh/nathanhood/postcss-variables/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanhood/postcss-variables)
+
 
 <img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
 
