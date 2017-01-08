@@ -18,6 +18,17 @@ function processFail(input, expected, opts = {}) {
 		});
 }
 
+function processMixins(input, expected, opts = {}, errors = 0) {
+	return postcss([ plugin(opts) ]).process(input, {
+			parser: require('postcss-js-mixins/parser/parse'),
+			stringifier: require('postcss-js-mixins/parser/stringify')
+		})
+		.then((result) => {
+			expect(result.css).to.equal(expected);
+			expect(result.warnings().length).to.equal(errors);
+		});
+}
+
 describe('Declarations', () => {
 	it('should resolve values', () => {
 		return process(
@@ -281,4 +292,46 @@ describe('At-Rules', () => {
 	});
 
 	// TODO: Finish @rule tests (font-face, supports, etc)
+});
+
+describe('Mixins', () => {
+	it('should resolve params passed into mixins (postcss-js-mixins)', () => {
+		return processMixins(
+			`$color: #000;
+			.block {
+				mixin($color);
+				mixin($colors.primary);
+			}`,
+			`.block {
+				mixin(#000);
+				mixin(#fff);
+			}`,
+			{
+				globals: {
+					colors: {
+						primary: '#fff'
+					}
+				}
+			}
+		);
+	});
+
+	it('should resolve mixture of params passed into mixin', () => {
+		return processMixins(
+			`$color: #000;
+			.block {
+				mixin($color, url('string.png'), 10, 30px, $colors.primary);
+			}`,
+			`.block {
+				mixin(#000, url('string.png'), 10, 30px, #fff);
+			}`,
+			{
+				globals: {
+					colors: {
+						primary: '#fff'
+					}
+				}
+			}
+		);
+	});
 });

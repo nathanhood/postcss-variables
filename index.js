@@ -152,6 +152,14 @@ module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
 		return nodeCount;
 	}
 
+	function eachMixin(node, parent, nodeCount) {
+		node.arguments = node.arguments.map(arg => {
+			return getVariableTransformedString(parent, arg);
+		});
+
+		return nodeCount;
+	}
+
 	/**
 	 * Traverse every node
 	 *
@@ -168,6 +176,8 @@ module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
 				index = eachRule(node, parent, index);
 			} else if (node.type === 'atrule') {
 				index = eachAtRule(node, parent, index);
+			} else if (node.type === 'mixin') {
+				index = eachMixin(node, parent, index);
 			}
 
 			if (node.nodes) {
