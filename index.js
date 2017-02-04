@@ -154,7 +154,15 @@ module.exports = postcss.plugin('postcss-variables', (opts = {}) => {
 
 	function eachMixin(node, parent, nodeCount) {
 		node.arguments = node.arguments.map(arg => {
-			return getVariableTransformedString(parent, arg);
+			if (typeof arg === 'object') {
+				Object.keys(arg).forEach(key => {
+					arg[key] = getVariableTransformedString(parent, arg[key]);
+				});
+			} else {
+				arg = getVariableTransformedString(parent, arg);
+			}
+
+			return arg;
 		});
 
 		return nodeCount;
