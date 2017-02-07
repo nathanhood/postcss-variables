@@ -20,8 +20,7 @@ function processFail(input, expected, opts = {}) {
 
 function processMixins(input, expected, opts = {}, errors = 0) {
 	return postcss([ plugin(opts) ]).process(input, {
-			parser: require('postcss-js-mixins/parser/parse'),
-			stringifier: require('postcss-js-mixins/parser/stringify')
+			syntax: require('postcss-wee-syntax')
 		})
 		.then((result) => {
 			expect(result.css).to.equal(expected);
