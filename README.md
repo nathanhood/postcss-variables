@@ -105,4 +105,63 @@ require('postcss-variables')({
 }
 ```
 
+## Advanced
+ 
+When creating your global variables, you may want to eliminate duplication by referencing an existing property to define your new variable. You can do this by referencing variables like you would in your stylesheet. Here is the basic idea:
+
+```js
+let vars = {
+	colors: {
+		primary: '#fff'
+	},
+	heading: {
+		color: '$colors.primary'
+	}
+ };
+```
+
+In certain circumstances, you may want to create a base variables file that you would want to be able to override. This would be a use-case if you were using this plugin inside of some kind of framework.
+If you are using functions to calculate global variables, you may want to delay the function execution until after you had a chance to override your variables. This can be done by using the `defer` method.
+
+Here is a full example of how you might create a base variables file:
+
+```js
+function darken(color, pct) {
+	// Do something to calculate darker hex value
+	return result
+}
+
+module.exports = {
+	colors: {
+		white: '#fff',
+		gray: defer(darken, ['$colors.white', 35])
+	}
+ };
+```
+
+This is what a full example would look like in order to use these features:
+
+```js
+/* variables.js */
+const { defer } = require('postcss-variables/lib/helpers');
+const register = require('postcss-variables/lib/register');
+
+function darken(color, pct) {
+	// Do something to calculate darker hex value
+	return result
+}
+
+let vars = {
+	colors: {
+		primary: '#fff',
+		gray: defer(darken, ['$colors.white', 35])
+	},
+	heading: {
+		color: '$colors.primary'
+	}
+};
+
+module.exports = register(vars);
+```
+
 **Note:** Please refer to [Advanced Variables](https://github.com/jonathantneal/postcss-advanced-variables) for more advanced features. This library is essentially a simplification and alteration of that plugin. Thank you to the author for making it available.

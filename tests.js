@@ -1,6 +1,8 @@
 const expect = require('chai').expect;
 const postcss = require('postcss');
 const plugin = require('./');
+const register = require('./lib/register');
+const { defer } = require('./lib/helpers');
 
 function process(input, expected, opts = {}) {
 	return postcss([ plugin(opts) ]).process(input)
@@ -332,5 +334,75 @@ describe('Mixins', () => {
 				}
 			}
 		);
+	});
+});
+
+describe('Registering and deferring variables', () => {
+	it('should return function', () => {
+		expect(typeof register()).to.equal('function');
+	});
+
+	it('should return evaluated object when executed', () => {
+		let vars = {
+				prop1: 'test',
+				prop2: '$prop1'
+			},
+			results = register(vars)();
+
+		expect(JSON.stringify(results)).to.equal('{"prop1":"test","prop2":"test"}');
+	});
+
+	it('should evaluate dot notated variable references', () => {
+		let vars = {
+				colors: {
+					primary: '#000'
+				},
+				input: {
+					color: '$colors.primary'
+				}
+			},
+			results = register(vars)();
+
+		expect(results.input.color).to.equal('#000');
+	});
+
+	it('should be able to override properties that are referenced by other properties', () => {
+		let vars = {
+				colors: {
+					primary: '#000'
+				},
+				input: {
+					color: '$colors.primary'
+				}
+			};
+
+		// Override variable
+		vars.colors.primary = '#eee';
+
+		let results = register(vars)();
+
+		expect(results.input.color).to.equal('#eee');
+		expect(results.colors.primary).to.equal('#eee');
+	});
+
+	it('should be able to defer property function execution', () => {
+		let colorFn = (val) => {
+				return val;
+			},
+			vars = {
+				colors: {
+					primary: '#fff'
+				},
+				input: {
+					color: defer(colorFn, ['$colors.primary'])
+				}
+			};
+
+		// Make overriding change that affects function outcome
+		vars.colors.primary = '#000';
+
+		let results = register(vars)();
+
+		expect(results.input.color).to.equal('#000');
 	});
 });
