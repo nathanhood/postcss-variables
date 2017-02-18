@@ -123,8 +123,6 @@ let vars = {
 In certain circumstances, you may want to create a base variables file that you would want to be able to override. This would be a use-case if you were using this plugin inside of some kind of framework.
 If you are using functions to calculate global variables, you may want to delay the function execution until after you had a chance to override your variables. This can be done by using the `defer` method.
 
-Here is a full example of how you might create a base variables file:
-
 ```js
 function darken(color, pct) {
 	// Do something to calculate darker hex value
