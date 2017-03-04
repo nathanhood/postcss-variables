@@ -335,6 +335,18 @@ describe('Mixins', () => {
 			}
 		);
 	});
+
+	it('should resolve key: value params passed into mixin', () => {
+		return processMixins(
+			`$color: #000;
+			.block {
+				mixin(color: $color, 10, 30px);
+			}`,
+			`.block {
+				mixin(10, 30px, color: #000);
+			}`
+		);
+	});
 });
 
 describe('Registering and deferring variables', () => {
