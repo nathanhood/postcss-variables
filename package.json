@@ -1,6 +1,6 @@
 {
   "name": "postcss-variables",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "PostCSS plugin that converts variables into CSS",
   "main": "index.js",
   "keywords": [
