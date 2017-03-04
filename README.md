@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/nathanhood/postcss-variables.svg?branch=master)](https://travis-ci.org/nathanhood/postcss-variables)
 [![codecov](https://codecov.io/gh/nathanhood/postcss-variables/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanhood/postcss-variables)
+[![npm version](https://badge.fury.io/js/postcss-variables.svg)](https://badge.fury.io/js/postcss-variables)
 
 <img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
 
@@ -161,5 +162,3 @@ let vars = {
 
 module.exports = register(vars);
 ```
-
-**Note:** Please refer to [Advanced Variables](https://github.com/jonathantneal/postcss-advanced-variables) for more advanced features. This library is essentially a simplification and alteration of that plugin. Thank you to the author for making it available.

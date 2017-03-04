@@ -1,6 +1,6 @@
 {
   "name": "postcss-variables",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "PostCSS plugin that converts variables into CSS",
   "main": "index.js",
   "keywords": [
@@ -13,6 +13,7 @@
   "scripts": {
     "test": "mocha ./tests.js"
   },
+  "repository": "nathanhood/postcss-variables",
   "author": "Nathan Hood",
   "license": "MIT",
   "dependencies": {
