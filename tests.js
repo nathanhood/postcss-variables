@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const postcss = require('postcss');
 const plugin = require('./');
 const register = require('./lib/register');
-const { defer } = require('./lib/helpers');
+const { defer, icon } = require('./lib/helpers');
 
 function process(input, expected, opts = {}) {
 	return postcss([ plugin(opts) ]).process(input)
@@ -416,5 +416,12 @@ describe('Registering and deferring variables', () => {
 		let results = register(vars)();
 
 		expect(results.input.color).to.equal('#000');
+	});
+});
+
+describe('Helpers: icon', () => {
+	it('should escape and wrap icon in quotes', () => {
+		expect(icon('e803')).to.equal("'\\e803'");
+		expect(icon("e803")).to.equal("'\\e803'");
 	});
 });
