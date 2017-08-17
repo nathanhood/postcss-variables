@@ -20,7 +20,7 @@
     "postcss": "^5.2.6"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "postcss-js-mixins": "^2.2.0",
