@@ -1,5 +1,7 @@
 # PostCSS Variables
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nathanhood/postcss-variables.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/nathanhood/postcss-variables.svg?branch=master)](https://travis-ci.org/nathanhood/postcss-variables)
 [![codecov](https://codecov.io/gh/nathanhood/postcss-variables/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanhood/postcss-variables)
 [![npm version](https://badge.fury.io/js/postcss-variables.svg)](https://badge.fury.io/js/postcss-variables)
