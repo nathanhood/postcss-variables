@@ -22,8 +22,8 @@
   "devDependencies": {
     "chai": "^4.1.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
     "postcss-js-mixins": "^2.2.0",
     "postcss-wee-syntax": "2.0.0"
+    "mocha": "^3.5.0",
   }
 }
